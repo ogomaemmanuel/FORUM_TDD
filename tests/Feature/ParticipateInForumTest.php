@@ -18,9 +18,9 @@ class ParticipateInForumTest extends TestCase
    {
        $this->expectException(AuthenticationException::class);
 
-       $thread=factory('App\Thread')->create();
+       $thread=create('App\Thread');
 
-       $reply= factory('App\Reply')->create();
+       $reply= create('App\Reply');
 
        $this->post($thread->path().'/replies',$reply->toArray());
 
@@ -29,13 +29,13 @@ class ParticipateInForumTest extends TestCase
    function an_authenicated_user_may_participate_in_forum_threads()
    {
        //given a user is authenticated
-       $this->be(factory('App\User')->create());
+       $this->signIn();
 
        //and existing thread
-       $thread=factory('App\Thread')->create();
+       $thread=create('App\Thread');
 
        //when a user adds a reply to a thread
-       $reply= factory('App\Reply')->make();
+       $reply= make('App\Reply');
 
        $this->post($thread->path().'/replies',$reply->toArray());
 
