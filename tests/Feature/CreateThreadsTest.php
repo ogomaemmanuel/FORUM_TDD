@@ -25,6 +25,16 @@ class CreateThreadsTest extends TestCase
 
     }
 
+    /** @test */
+    function  guest_can_see_the_create_thread_page()
+    {
+        $this->withExceptionHandling()
+
+            ->get('/threads/create')
+
+            ->assertRedirect('/login');
+    }
+
 
     /** @test */
 

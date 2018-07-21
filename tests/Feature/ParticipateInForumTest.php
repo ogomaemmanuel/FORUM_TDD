@@ -12,6 +12,8 @@ class ParticipateInForumTest extends TestCase
 {
     use DatabaseMigrations;
 
+
+
    /** @test */
 
    function unauthenticated_user_may_not_add_replies()

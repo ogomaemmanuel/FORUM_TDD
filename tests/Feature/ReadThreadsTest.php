@@ -12,6 +12,8 @@ class ReadThreadsTest extends TestCase
 {
     use DatabaseMigrations;
 
+
+
     public function setUp()
     {
         parent::setUp();
