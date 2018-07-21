@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Auth\AuthenticationException;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -12,6 +13,19 @@ class ParticipateInForumTest extends TestCase
     use DatabaseMigrations;
 
    /** @test */
+
+   function unauthenticated_user_may_not_add_replies()
+   {
+       $this->expectException(AuthenticationException::class);
+
+       $thread=factory('App\Thread')->create();
+
+       $reply= factory('App\Reply')->create();
+
+       $this->post($thread->path().'/replies',$reply->toArray());
+
+   }
+    /** @test */
    function an_authenicated_user_may_participate_in_forum_threads()
    {
        //given a user is authenticated
@@ -21,10 +35,10 @@ class ParticipateInForumTest extends TestCase
        $thread=factory('App\Thread')->create();
 
        //when a user adds a reply to a thread
-       $reply= factory('App\Reply')->create();
+       $reply= factory('App\Reply')->make();
 
-       $this->post('/threads/'.$thread->id.'/replies',$reply->toArray());
+       $this->post($thread->path().'/replies',$reply->toArray());
 
-       $this->get($this->thread->path())->assertSee($reply->body);
+       $this->get($thread->path())->assertSee($reply->body);
    }
 }

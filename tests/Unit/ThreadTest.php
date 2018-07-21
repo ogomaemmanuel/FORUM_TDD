@@ -24,6 +24,7 @@ class ThreadTest extends TestCase
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->thread->replies);
     }
+
     /** @test */
     function a_thread_has_creator(){
 
@@ -31,12 +32,14 @@ class ThreadTest extends TestCase
 
     }
 
+    /** @test */
     public function a_thread_can_add_a_reply(){
 
         $this->thread->addReply([
            'body'=> 'FoorBar',
             'user_id'=>1
         ]);
+
         $this->assertCount(1, $this->thread->replies);
     }
 

@@ -17,13 +17,4 @@ class ReplyTest extends TestCase
 
         $this->assertInstanceOf('App\User', $reply->owner);
     }
-
-    /** @test */
-    function a_thread_has_creator(){
-
-        $thread= factory('App\Thread')->create();
-
-        $this->assertInstanceOf('App\User', $thread->creator);
-
-    }
 }
