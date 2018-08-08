@@ -12,25 +12,29 @@ class ThreadsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except(['index','show']);
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
     /**
      * @param Channel $channel
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Channel $channel)
     {
 
-        if($channel->exists)
-        {
-            $threads=$channel->threads()->latest()->get();
+        if ($channel->exists) {
+            $threads = $channel->threads()->latest();
+        } else {
+            $threads = Thread::latest();
+        }
+        if ($username = request('by')) {
+            $user=\App\User::where('name',$username)->firstOrFail();
+
+            $threads->where('user_id',$user->id);
         }
 
-        else{
-            $threads = Thread::latest()->get();
-        }
-
+        $threads = $threads->get();
         return view('threads.index', compact('threads'));
     }
 
@@ -48,21 +52,22 @@ class ThreadsController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'title'=> 'required',
-            'body'=> 'required',
-            'channel_id'=>'required|exists:channels,id'
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required',
+            'channel_id' => 'required|exists:channels,id'
         ]);
-       $thread= Thread::create(
+        $thread = Thread::create(
             [
-                'user_id'=> auth()->id(),
-                'title'=>request('title'),
-                'channel_id'=>request('channel_id'),
-                'body'=>request('body'),
+                'user_id' => auth()->id(),
+                'title' => request('title'),
+                'channel_id' => request('channel_id'),
+                'body' => request('body'),
             ]
         );
         return redirect($thread->path());
@@ -71,11 +76,12 @@ class ThreadsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $channelId
+     * @param              $channelId
      * @param  \App\Thread $thread
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId,Thread $thread)
+    public function show($channelId, Thread $thread)
     {
         return view('threads.show', compact('thread'));
 
@@ -85,6 +91,7 @@ class ThreadsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Thread $thread
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Thread $thread)
@@ -96,7 +103,8 @@ class ThreadsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Thread $thread
+     * @param  \App\Thread              $thread
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Thread $thread)
@@ -108,6 +116,7 @@ class ThreadsController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Thread $thread
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Thread $thread)
