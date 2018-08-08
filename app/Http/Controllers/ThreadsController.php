@@ -23,18 +23,7 @@ class ThreadsController extends Controller
     public function index(Channel $channel)
     {
 
-        if ($channel->exists) {
-            $threads = $channel->threads()->latest();
-        } else {
-            $threads = Thread::latest();
-        }
-        if ($username = request('by')) {
-            $user=\App\User::where('name',$username)->firstOrFail();
-
-            $threads->where('user_id',$user->id);
-        }
-
-        $threads = $threads->get();
+        $threads = $this->getThreads($channel);
         return view('threads.index', compact('threads'));
     }
 
@@ -122,5 +111,27 @@ class ThreadsController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    /**
+     * @param Channel $channel
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Query\Builder|\Illuminate\Support\Collection|static|static[]
+     */
+    protected function getThreads(Channel $channel)
+    {
+        if ($channel->exists) {
+            $threads = $channel->threads()->latest();
+        } else {
+            $threads = Thread::latest();
+        }
+        if ($username = request('by')) {
+            $user = \App\User::where('name', $username)->firstOrFail();
+
+            $threads->where('user_id', $user->id);
+        }
+
+        $threads = $threads->get();
+        return $threads;
     }
 }
