@@ -40,4 +40,11 @@ class Thread extends Model
 
     }
 
+    function scopeFilter($query,$filters)
+    {
+
+        return $filters->apply($query);
+
+    }
+
 }
