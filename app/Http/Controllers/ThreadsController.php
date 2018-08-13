@@ -21,13 +21,14 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Channel $channel,ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters)
     {
 
 
-
         $threads = $this->getThreads($channel, $filters);
-
+        if (request()->wantsJson()) {
+            return $threads;
+        }
         return view('threads.index', compact('threads'));
     }
 
@@ -78,8 +79,8 @@ class ThreadsController extends Controller
     {
         return view('threads.show',
             [
-                "thread"=>$thread,
-                "replies"=>$thread->replies()->paginate(25)
+                "thread" => $thread,
+                "replies" => $thread->replies()->paginate(25)
             ]);
 
     }
@@ -134,9 +135,11 @@ class ThreadsController extends Controller
         if ($channel->exists) {
             $threads->where("channel_id", $channel->id);
         }
-
-
+//
+//        dd($threads->toSql());
         $threads = $threads->get();
+
+
         return $threads;
     }
 //
