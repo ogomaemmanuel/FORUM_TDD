@@ -22,13 +22,14 @@ class Thread extends Model
     public function path()
     {
 
-        return "/threads/{$this->channel->slug }/{$this->id}";
+        return "/threads/foobar/{$this->id}";
     }
 
     public function replies()
     {
 
-        return $this->hasMany(Reply::class);
+        return $this->hasMany(Reply::class)
+            ->withCount('favorites')->with('owner');
 
     }
 
