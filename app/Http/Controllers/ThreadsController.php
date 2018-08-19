@@ -123,11 +123,9 @@ class ThreadsController extends Controller
 
         if($thread->user_id != Auth()->id()){
 
-            if(request()->wantsJson()){
-                return response(["status"=>"Permision Denied"],403);
-            }
 
-            return redirect("/login");
+              return abort(403, "You do not have permission to do this");
+
         }
 
         $thread->delete();
