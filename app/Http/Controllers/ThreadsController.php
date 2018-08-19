@@ -75,7 +75,7 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Thread $thread)
+    public function show($channel, Thread $thread)
     {
         return view('threads.show',
             [
@@ -117,9 +117,15 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel ,Thread $thread)
     {
         //
+
+//        $thread->replies()->delete();
+
+        $thread->delete();
+
+        return response([],204);
     }
 
     /**
