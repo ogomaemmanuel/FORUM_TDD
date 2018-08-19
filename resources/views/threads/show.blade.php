@@ -11,20 +11,23 @@
                         <div class="level">
                             <span class="flex">
                                   <a href="{{route('profile',$thread->creator)}}">{{$thread->creator->name}}</a> posted:
-                            {{$thread->title}}
+                                {{$thread->title}}
                             </span>
 
-                        <form action="{{$thread->path()}}" method="POST">
 
-                            {{csrf_field()}}
-                            {{method_field("DELETE")}}
+                            @can("update",$thread)
+                                <form action="{{$thread->path()}}" method="POST">
 
-                            <button type="submit" class="btn btn-link">Delete Thread</button>
-                        </form>
+                                    {{csrf_field()}}
+                                    {{method_field("DELETE")}}
+
+                                    <button type="submit" class="btn btn-link">Delete Thread</button>
+                                </form>
+                            @endcan
                         </div>
 
 
-</div>
+                    </div>
 
                     <div class="panel-body">
                         {{$thread->body}}
@@ -58,11 +61,11 @@
                 <div class="panel panel-default">
 
                     <div class="panel-body">
-                      <p>This thread was published {{$thread->created_at->diffForHumans()}}by
-                          <a href="#"> {{$thread->creator->name}}}</a>, and currently
-                          has {{$thread->replies_count}} {{str_plural("comment",$thread->replies_count)}}
+                        <p>This thread was published {{$thread->created_at->diffForHumans()}}by
+                            <a href="#"> {{$thread->creator->name}}}</a>, and currently
+                            has {{$thread->replies_count}} {{str_plural("comment",$thread->replies_count)}}
 
-                      </p>
+                        </p>
                     </div>
                 </div>
 
