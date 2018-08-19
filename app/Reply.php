@@ -9,6 +9,7 @@ class Reply extends Model
 
 
     use Favoritable;
+    use RecordsActivity;
 
     //
     protected $guarded = [];
