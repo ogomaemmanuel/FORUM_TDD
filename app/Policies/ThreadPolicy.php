@@ -11,11 +11,7 @@ class ThreadPolicy
     use HandlesAuthorization;
 
 
-    public function before($user){
-        if($user->name=="Emmanuel Ogoma"){
-            return true;
-        }
-    }
+
 
     /**
      * Determine whether the user can view the thread.
