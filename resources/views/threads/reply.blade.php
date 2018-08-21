@@ -39,5 +39,4 @@
             </div>
         @endcan
     </div>
-
 </reply>

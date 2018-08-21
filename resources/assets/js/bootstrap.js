@@ -7,6 +7,17 @@ window._ = require('lodash');
  * code may be modified to fit the specific needs of your application.
  */
 window.Vue = require('vue');
+
+window.Vue.prototype.authorize=function (handler) {
+    
+    let user= window.App.user;
+
+
+    return user? handler(user):false;
+    // if(!user) return false;
+    //
+    // return handler(window.App.user)
+}
 try {
     window.$ = window.jQuery = require('jquery');
 
