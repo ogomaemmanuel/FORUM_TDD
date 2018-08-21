@@ -43236,7 +43236,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n.alert-flash {\n    position: fixed;\n    right: 25px;\n    bottom: 25px;\n}\n\n", ""]);
+exports.push([module.i, "\n.alert-flash {\n    position: fixed;\n    right: 25px;\n    bottom: 25px;\n}\n", ""]);
 
 // exports
 
@@ -43596,16 +43596,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["message"],
+    props: ['message'],
     data: function data() {
         return {
-            body: this.message,
+            body: '',
             show: false
         };
     },
@@ -43614,18 +43610,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         if (this.message) {
             this.flash(this.message);
-            this.show = true;
         }
-
-        window.events.$on("flash", function (message) {
-            _this.flash(message);
+        window.events.$on('flash', function (message) {
+            return _this.flash(message);
         });
     },
 
-
     methods: {
         flash: function flash(message) {
-            this.body = this.message, this.show = true;
+            this.body = message;
+            this.show = true;
             this.hide();
         },
         hide: function hide() {
@@ -43636,7 +43630,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }, 3000);
         }
     }
-
 });
 
 /***/ }),
@@ -43743,6 +43736,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.editing = false;
 
             flash('Updated!');
+        },
+        destroy: function destroy() {
+            axios.delete("/replies/" + this.attributes.id);
+
+            $(this.$el).fadeOut(300, function () {
+                flash("Your reply has been deleted.");
+            });
         }
     }
 });
