@@ -43841,6 +43841,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+
     methods: {
         toggle: function toggle() {
             this.active ? this.destroy() : this.create();

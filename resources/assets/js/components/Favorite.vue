@@ -16,6 +16,8 @@
                 active: this.reply.isFavorited
             }
         },
+
+
         methods:{
             toggle(){
                  this.active? this.destroy():this.create()
