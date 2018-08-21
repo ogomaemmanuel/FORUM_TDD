@@ -25,12 +25,16 @@ class RepliesController extends Controller
             'body' => 'required'
         ]);
 
-        $thread->addReply([
+       $reply= $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id(),
         ]);
 
-        return back();
+        if(request()->expectsJson()){
+            return $reply->load('owner');
+        }
+
+        return back()->with('flash', 'Your reply has been left.');
     }
 
 
