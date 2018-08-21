@@ -23,11 +23,8 @@ class Thread extends Model
         });
 
         static::deleting(function ($thread) {
-            $thread->replies->each(function ($reply){
-                $reply->delete();
-            });
+            $thread->replies->each();
         });
-
     }
 
     public function path()
