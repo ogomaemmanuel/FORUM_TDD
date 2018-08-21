@@ -23,7 +23,6 @@
                 this.flash(this.message);
                 this.show = true;
 
-
             }
 
             window.events.$on("flash",message=>{
@@ -43,7 +42,6 @@
                 }, 3000)
             }
         }
-
 
     }
 </script>
