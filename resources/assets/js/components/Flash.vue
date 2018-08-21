@@ -2,7 +2,7 @@
 
     <div class="alert alert-success alert-flash" role="alert" v-show="show">
 
-        <strong>Success!</strong>{{body}}
+        <strong>Success!</strong> {{body}}
     </div>
 
 

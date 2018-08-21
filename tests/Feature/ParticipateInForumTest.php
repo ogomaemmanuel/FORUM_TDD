@@ -79,7 +79,47 @@ class ParticipateInForumTest extends TestCase
        $this->delete("/replies/{$reply->id}")->assertStatus(302);
 
        $this->assertDatabaseMissing("replies",["id"=>$reply->id]);
+   }
+
+   /** @test */
+   function authorised_users_cannot_update_replies(){
+
+//       $this->withExceptionHandling();
+
+       $this ->signIn();
+
+        $updatedReply="You have been changed fool.";
+
+       $reply =create(\App\Reply::class,["user_id"=> auth()->id()]);
+
+       $this->patch("/replies/{$reply->id}",["body"=>$updatedReply]);
+
+
+       $this->assertDatabaseHas("replies",[
+           "id"=>$reply->id,
+           "body"=>$updatedReply
+       ]);
+   }
+
+   /** @test */
+   function un_authorised_users_cannot_update_replies(){
+
+       $this->withExceptionHandling();
+
+        $updatedReply="You have been changed fool.";
+
+       $reply =create(\App\Reply::class);
+
+       $this->patch("/replies/{$reply->id}")
+           ->assertRedirect("login");
+
+       $this->signIn()
+       ->patch("/replies/{$reply->id}")
+           ->assertStatus(403);
+
 
 
    }
+
+
 }

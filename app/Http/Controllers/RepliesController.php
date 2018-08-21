@@ -18,16 +18,16 @@ class RepliesController extends Controller
         $this->middleware('auth');
     }
 
-    public function store($channelid,Thread $thread)
+    public function store($channelid, Thread $thread)
     {
 
-        $this->validate(request(),[
-            'body'=>'required'
+        $this->validate(request(), [
+            'body' => 'required'
         ]);
 
         $thread->addReply([
-            'body'=>request('body'),
-            'user_id'=>auth()->id(),
+            'body' => request('body'),
+            'user_id' => auth()->id(),
         ]);
 
         return back();
@@ -37,10 +37,16 @@ class RepliesController extends Controller
     public function destroy(Reply $reply)
     {
 
-      $this->authorize("update",$reply);
+        $this->authorize("update", $reply);
 
         $reply->delete();
 
         return back();
+    }
+
+    public function update(Reply $reply)
+    {
+       $this->authorize("update",$reply);
+        $reply->update(request(["body"]));
     }
 }
