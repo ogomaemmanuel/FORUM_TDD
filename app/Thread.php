@@ -52,12 +52,7 @@ class Thread extends Model
     function addReply($reply)
     {
 
-        $reply= $this->replies()->create($reply);
-
-        $this->increment('replies_count');
-
-        return $reply;
-
+        return $this->replies()->create($reply);
     }
 
     function scopeFilter($query, $filters)

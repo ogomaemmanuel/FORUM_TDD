@@ -90,9 +90,9 @@ class ReadThreadsTest extends TestCase
 
        $reply =create("App\Reply",["thread_id"=>$thread->id]);
 
-       $response = $this->getJson("threads/unanswered=1")->json();
+       $response = $this->getJson("threads?unanswered=1")->json();
 
-       $this->assertCount(0,$response);
+       $this->assertCount(1,$response);
 
     }
 
