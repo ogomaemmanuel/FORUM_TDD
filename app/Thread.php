@@ -28,7 +28,6 @@ class Thread extends Model
     }
 
 
-
     public function replies()
     {
 
@@ -59,6 +58,34 @@ class Thread extends Model
     {
 
         return $filters->apply($query);
+
+    }
+
+    function subscribe($userId = null)
+    {
+
+        $this->subscriptions()->create([
+            "user_id" => $userId ?: auth()->id(),
+
+        ]);
+
+    }
+
+    function unsubscribe($userId = null)
+    {
+
+        $this->subscriptions()
+            ->where("user_id", $userId ?: auth()->id())
+            ->delete();
+
+    }
+
+    function subscriptions()
+    {
+
+
+        return $this->hasMany(ThreadSubscription::class);
+
 
     }
 
