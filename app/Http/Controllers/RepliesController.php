@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
+use App\Spam;
 use App\Thread;
 use Illuminate\Http\Request;
 
@@ -23,16 +24,14 @@ class RepliesController extends Controller
       return $thread->replies()->paginate(20);
     }
 
-    public function store($channelid, Thread $thread)
+    public function store($channelid, Thread $thread, Spam $spam)
     {
 
         $this->validate(request(), [
             'body' => 'required'
         ]);
 
-       if( stripos(request("body"),'yahoo customer support')!==false){
-           throw new \Exception("Your Reply Contains Spam.");
-       };
+        $spam->detect(request("body"));
 
        $reply= $thread->addReply([
             'body' => request('body'),
