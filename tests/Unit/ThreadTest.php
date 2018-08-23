@@ -126,12 +126,7 @@ class ThreadTest extends TestCase
         tap(auth()->user(), function($user) use($thread){
             $this->assertTrue($thread->hasUpdatesFor($user));
 
-            //Simulate that the user visited the Thread
-            cache()->forever(
-                $user->visitedThreadCacheKey($thread),
-
-                Carbon::now()
-            );
+            $user->read($thread);
 
             $this->assertFalse($thread->hasUpdatesFor($user));
         });
