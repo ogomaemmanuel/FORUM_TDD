@@ -30,12 +30,9 @@ class RepliesController extends Controller
             'body' => 'required'
         ]);
 
-//        stripos(request("body"),'yahoo customer support');
-
-        if(str_contains(request("body"),"Yahoo Customer Support")){
-
-            throw new \Exception("Your Reply Contains Spam.");
-        }
+       if( stripos(request("body"),'yahoo customer support')!==false){
+           throw new \Exception("Your Reply Contains Spam.");
+       };
 
        $reply= $thread->addReply([
             'body' => request('body'),
