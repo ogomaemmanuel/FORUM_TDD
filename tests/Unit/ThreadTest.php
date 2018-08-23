@@ -112,9 +112,7 @@ class ThreadTest extends TestCase
 
         $this->signIn();
 
-        $this->thread->subscribe();
-
-        $this->thread->addReply([
+        $this->thread->subscribe()->addReply([
             'body'=> 'FoorBar',
             'user_id'=>1
         ]);
