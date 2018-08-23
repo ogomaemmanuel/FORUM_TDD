@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Exception;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 use Tests\TestCase;
@@ -97,11 +98,17 @@ class ParticipateInThreadsTest extends TestCase
 
         $thread=create("App\Thread");
 
-        $reply=make([
+        $reply=make("App\Reply",[
             "body"=>"Yahoo Customer Support"
         ]);
 
+
+
+        $this->expectException(Exception::class);
+
         $this->post($thread->path().'/replies',$reply->toArray());
+
+
 
     }
 
