@@ -10,7 +10,7 @@ class SpamTest extends TestCase
 {
 
     /** @test */
-    public function it_validates_spam()
+    public function it_checks_for_invalid_keywords_spam()
     {
 
         $spam = new Spam;
@@ -23,5 +23,21 @@ class SpamTest extends TestCase
 
         $spam->detect("yahoo customer support");
         
+    }
+
+    /** @test */
+    public function it_checks_for_any_key_being_held_down()
+    {
+
+        $spam = new Spam;
+
+
+
+
+
+        $this->expectException(\Exception::class);
+
+        $spam->detect("Hello world aaaaaaaaa");
+
     }
 }

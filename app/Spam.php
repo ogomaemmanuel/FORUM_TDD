@@ -12,6 +12,8 @@ class Spam
 
         $this->detectInvalidKeywords($body);
 
+        $this->detectKeyHeldDown($body);
+
         return false;
 
     }
@@ -31,7 +33,13 @@ class Spam
             }
         }
 
+    }
 
+    public function detectKeyHeldDown($body){
+        if(preg_match('/(.)\\1{4,}/',$body))
+        {
 
+            throw new \Exception("Your Reply Contains Spam.");
+        }
     }
 }
