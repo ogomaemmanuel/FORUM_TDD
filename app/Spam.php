@@ -10,13 +10,13 @@ class Spam
 
         //Detect Invalid keywords
 
-        $this->detectInvalidKeywords();
+        $this->detectInvalidKeywords($body);
 
         return false;
 
     }
 
-    protected function detectInvalidKeywords()
+    protected function detectInvalidKeywords($body)
     {
         $invalidKeywords = [
 
@@ -25,7 +25,8 @@ class Spam
         ];
 
         foreach ($invalidKeywords as $keyword){
-            if( stripos(request("body"),'yahoo customer support')!==false){
+            if( stripos($body,$keyword)!==false){
+
                 throw new \Exception("Your Reply Contains Spam.");
             }
         }
