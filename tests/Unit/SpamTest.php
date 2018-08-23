@@ -1,6 +1,7 @@
 <?php
 
-use App\Spam;
+
+use App\Inspections\Spam;
 use Tests\TestCase;
 
 
