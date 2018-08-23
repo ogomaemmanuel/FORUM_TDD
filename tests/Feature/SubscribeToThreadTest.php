@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class SubscribeToThreadTest extends TestCase
 {
     Use DatabaseMigrations;
+
     /** @test */
     public function a_user_can_subscribe_to_threads()
     {
@@ -20,6 +21,7 @@ class SubscribeToThreadTest extends TestCase
         $this->assertCount(1,$thread->fresh()->subscriptions);
 
     }
+
     /** @test */
     public function a_user_can_unsubscribe_from_threads()
     {

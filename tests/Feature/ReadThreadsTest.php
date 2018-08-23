@@ -101,7 +101,7 @@ class ReadThreadsTest extends TestCase
 
         $thread=create("App\Thread");
 
-        $reply = create('App\Reply', ['thread_id' => $thread->id],2);
+        create('App\Reply', ['thread_id' => $thread->id],2);
 
         $response= $this->getJson($thread->path().'/replies')->json();
 

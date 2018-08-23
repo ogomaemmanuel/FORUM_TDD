@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class ChannelTest extends TestCase
 {
     Use DatabaseMigrations;
+
     /** @test */
     public function a_channel_consists_of_threds()
     {
